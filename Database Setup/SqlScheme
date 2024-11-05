@@ -1,0 +1,44 @@
+-- Players Table
+CREATE TABLE Players (
+    PlayerID CHAR(36) PRIMARY KEY,
+    Username VARCHAR(50) NOT NULL,
+    EmailHash CHAR(64) NOT NULL,
+    AccountCreationDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    LastLogin DATETIME,
+    BanStatus BOOLEAN DEFAULT FALSE,
+    BanTier INT DEFAULT 0,
+    TotalOffenses INT DEFAULT 0
+);
+
+-- Ban History Table
+CREATE TABLE BanHistory (
+    BanID CHAR(36) PRIMARY KEY,
+    PlayerID CHAR(36),
+    BanType ENUM('warning', 'temporary', 'permanent') NOT NULL,
+    StartDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    EndDate DATETIME,
+    ReasonCode INT,
+    ModeratorID CHAR(36),
+    AppealStatus ENUM('pending', 'approved', 'denied') DEFAULT 'pending',
+    AppealComments TEXT,
+    FOREIGN KEY (PlayerID) REFERENCES Players(PlayerID)
+);
+
+-- Ban Logs Table
+CREATE TABLE BanLogs (
+    LogID CHAR(36) PRIMARY KEY,
+    BanID CHAR(36),
+    Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ActionTaken VARCHAR(255),
+    ModeratorID CHAR(36),
+    Notes TEXT,
+    FOREIGN KEY (BanID) REFERENCES BanHistory(BanID)
+);
+
+-- Moderators Table
+CREATE TABLE Moderators (
+    ModeratorID CHAR(36) PRIMARY KEY,
+    Username VARCHAR(50) NOT NULL,
+    PasswordHash CHAR(64) NOT NULL,
+    Role ENUM('admin', 'moderator') DEFAULT 'moderator'
+);

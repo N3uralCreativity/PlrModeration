@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moderator Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Moderator Dashboard</h1>
+
+    <!-- Ban Player Form -->
+    <form id="banForm">
+        <h3>Ban a Player</h3>
+        <input type="text" id="playerID" placeholder="Player ID" required />
+        <input type="text" id="reasonCode" placeholder="Reason Code" required />
+        <input type="date" id="endDate" required />
+        <button type="submit">Ban Player</button>
+    </form>
+
+    <div id="response"></div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
